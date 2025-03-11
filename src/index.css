@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -98,4 +99,24 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.rating-scale {
+  @apply flex space-x-2 my-2;
+}
+
+.rating-scale button {
+  @apply w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors;
+}
+
+.rating-scale button.selected {
+  @apply bg-blue-500 text-white border-blue-500;
+}
+
+.question-box {
+  @apply bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-6;
+}
+
+.required-asterisk {
+  @apply text-red-500 ml-1;
 }
