@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,47 +9,91 @@ import RatingScale from "./RatingScale";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useNavigate } from "react-router-dom";
+
+export type FormDataType = {
+  expectations: string[];
+  interests: string[];
+  lifeScores: {
+    leisure: number | null;
+    work: number | null;
+  };
+  hobbies: string[];
+  importantRelationshipTraits: string[];
+  timeTogether: number | null;
+  personalityType: string;
+  futureOutlook: string[];
+  emotionalSupport: number | null;
+  financialGoals: number | null;
+  communicationTendency: number | null;
+  conflictResolution: number | null;
+  familyImportance: string[];
+  houseworkSplit: number | null;
+  childrenDesire: string;
+  futureMoves: string[];
+  religionImportance: number | null;
+  politicalViews: number | null;
+  moneyHandling: string[];
+  trustIssues: string[];
+  socialLife: number | null;
+  friendsTime: number | null;
+  healthImportance: number | null;
+  pets: string;
+  sexualCompatibility: number | null;
+  acceptanceNeeds: string[];
+  incomeRequirements: string;
+  selfDescription: string;
+  idealPartner: string;
+  email: string;
+  age: string;
+  stressResponse: string[];
+  lifePriorities: string[];
+  overallRating: number | null;
+  gender: string;
+  name: string;
+};
 
 export function CompatibilityForm() {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    expectations: [] as string[],
-    interests: [] as string[],
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<FormDataType>({
+    expectations: [],
+    interests: [],
     lifeScores: {
-      leisure: null as number | null,
-      work: null as number | null,
+      leisure: null,
+      work: null,
     },
-    hobbies: [] as string[],
-    importantRelationshipTraits: [] as string[],
-    timeTogether: null as number | null,
+    hobbies: [],
+    importantRelationshipTraits: [],
+    timeTogether: null,
     personalityType: "",
-    futureOutlook: [] as string[],
-    emotionalSupport: null as number | null,
-    financialGoals: null as number | null,
-    communicationTendency: null as number | null,
-    conflictResolution: null as number | null,
-    familyImportance: [] as string[],
-    houseworkSplit: null as number | null,
+    futureOutlook: [],
+    emotionalSupport: null,
+    financialGoals: null,
+    communicationTendency: null,
+    conflictResolution: null,
+    familyImportance: [],
+    houseworkSplit: null,
     childrenDesire: "",
-    futureMoves: [] as string[],
-    religionImportance: null as number | null,
-    politicalViews: null as number | null,
-    moneyHandling: [] as string[],
-    trustIssues: [] as string[],
-    socialLife: null as number | null,
-    friendsTime: null as number | null,
-    healthImportance: null as number | null,
+    futureMoves: [],
+    religionImportance: null,
+    politicalViews: null,
+    moneyHandling: [],
+    trustIssues: [],
+    socialLife: null,
+    friendsTime: null,
+    healthImportance: null,
     pets: "",
-    sexualCompatibility: null as number | null,
-    acceptanceNeeds: [] as string[],
-    incomeRequirements: "" as string,
+    sexualCompatibility: null,
+    acceptanceNeeds: [],
+    incomeRequirements: "",
     selfDescription: "",
     idealPartner: "",
     email: "",
     age: "",
-    stressResponse: [] as string[],
-    lifePriorities: [] as string[],
-    overallRating: null as number | null,
+    stressResponse: [],
+    lifePriorities: [],
+    overallRating: null,
     gender: "",
     name: "",
   });
@@ -106,10 +149,17 @@ export function CompatibilityForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    
+    // Store the form data in sessionStorage to access it on the results page
+    sessionStorage.setItem("formData", JSON.stringify(formData));
+    
     toast({
       title: "Formular gesendet",
       description: "Vielen Dank für das Ausfüllen des Zukunfts-Partner-Checks!",
     });
+    
+    // Navigate to the results page
+    navigate("/results");
   };
 
   return (
