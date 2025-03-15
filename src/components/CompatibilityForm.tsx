@@ -100,18 +100,23 @@ export function CompatibilityForm() {
 
   const handleCheckboxChange = (section: string, value: string) => {
     setFormData((prev) => {
-      const currentValues = prev[section as keyof typeof prev] as string[];
-      if (currentValues.includes(value)) {
-        return {
-          ...prev,
-          [section]: currentValues.filter((item) => item !== value),
-        };
-      } else {
-        return {
-          ...prev,
-          [section]: [...currentValues, value],
-        };
+      const currentValues = prev[section as keyof typeof prev];
+      
+      if (Array.isArray(currentValues)) {
+        if (currentValues.includes(value)) {
+          return {
+            ...prev,
+            [section]: currentValues.filter((item) => item !== value),
+          };
+        } else {
+          return {
+            ...prev,
+            [section]: [...currentValues, value],
+          };
+        }
       }
+      
+      return prev;
     });
   };
 
@@ -150,7 +155,6 @@ export function CompatibilityForm() {
     e.preventDefault();
     console.log("Form submitted:", formData);
     
-    // Store the form data in sessionStorage to access it on the results page
     sessionStorage.setItem("formData", JSON.stringify(formData));
     
     toast({
@@ -158,7 +162,6 @@ export function CompatibilityForm() {
       description: "Vielen Dank für das Ausfüllen des Zukunfts-Partner-Checks!",
     });
     
-    // Navigate to the results page
     navigate("/results");
   };
 

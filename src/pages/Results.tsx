@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -58,17 +57,20 @@ const Results = () => {
     
     Object.entries(data).forEach(([key, value]) => {
       if (key === "lifeScores") {
+        // Properly handle the lifeScores object
         const lifeScores = value as FormDataType["lifeScores"];
         result["lifeScores_leisure"] = lifeScores.leisure || 0;
         result["lifeScores_work"] = lifeScores.work || 0;
       } else if (Array.isArray(value)) {
         result[key] = value.join(", ");
       } else if (typeof value === "object" && value !== null) {
-        Object.entries(value).forEach(([subKey, subValue]) => {
-          result[`${key}_${subKey}`] = subValue || "";
+        // Handle nested objects by flattening them
+        Object.entries(value as Record<string, any>).forEach(([subKey, subValue]) => {
+          result[`${key}_${subKey}`] = subValue !== null && subValue !== undefined ? String(subValue) : "";
         });
       } else {
-        result[key] = value || "";
+        // Ensure non-object values are strings or numbers
+        result[key] = value !== null && value !== undefined ? String(value) : "";
       }
     });
     
